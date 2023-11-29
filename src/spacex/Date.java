@@ -1,7 +1,6 @@
 package spacex;
 
 public class Date {
-
     private int   day;
     private Month month;
     private int   year;
