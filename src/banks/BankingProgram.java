@@ -12,18 +12,22 @@ public class BankingProgram {
     }
 
     public static void main(String[] args) {
-        CheckingAccount john = new CheckingAccount();
+        CheckingAccount john = new CheckingAccount("John Lewis", 19, 113, 30752);
         john.setName("John Lewis");
         john.setAge(19);
         john.setAccountNumber(30752);
         john.setRoutingNumber(113);
         print(john);
 
-        CheckingAccount samantha = new CheckingAccount();
+        CheckingAccount samantha = new CheckingAccount("Samantha Barks", 21, 113, 17359);
         samantha.setName("Samantha Barks");
         samantha.setAge(21);
         samantha.setAccountNumber(17359);
         samantha.setRoutingNumber(113);
         print(samantha);
+
+
+        CheckingAccount unknown = new CheckingAccount();
+        print(unknown);
     }
 }

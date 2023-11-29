@@ -8,6 +8,20 @@ public class CheckingAccount {
     private int routingNumber;
     private int accountNumber;
 
+    //TODO: (5) create default constructor and initialize parameters
+    public CheckingAccount(){
+        this("Unknown", 18, 110, 10000);
+    }
+
+
+    //TODO: (4) create a constructor with all the parameters
+    public CheckingAccount(String name, int age, int routingNumber, int accountNumber) {
+        this.name = name;
+        this.age = age;
+        this.routingNumber = routingNumber;
+        this.accountNumber = accountNumber;
+    }
+
     //TODO: (2) We created gettor/accessor methods
     public String getName() {
         return name;
