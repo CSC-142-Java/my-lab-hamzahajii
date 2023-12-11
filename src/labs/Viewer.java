@@ -1,10 +1,9 @@
 package labs;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import javax.swing.JFrame;
+import javax.swing.*;
+import java.awt.*;
 
-public class Display {
+public class Viewer {
 
     public static final int WIDTH  = 500;
     public static final int HEIGHT = 500;
@@ -13,15 +12,15 @@ public class Display {
 
     public JFrame frame;		//Viewer Window
 
-    public Display() {
+    public Viewer() {
         this(X_TOP, Y_TOP, WIDTH, HEIGHT);
     }
 
-    public Display(int width, int height) {
+    public Viewer(int width, int height) {
         this(X_TOP, Y_TOP, width, height);
     }
 
-    public Display(int x, int y, int width, int height) {
+    public Viewer(int x, int y, int width, int height) {
         frame = new JFrame();
         frame.setTitle("Drawing Window");
         frame.setSize(width, height);
