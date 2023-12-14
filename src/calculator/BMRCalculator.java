@@ -51,9 +51,7 @@ public class BMRCalculator {
             value = scanner.next();
         }
 
-        char bodyType = value.charAt(0);
-
-        return bodyType;
+        return value.charAt(0);
     }
 
 
