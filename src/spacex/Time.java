@@ -1,33 +1,65 @@
 package spacex;
 
-public class Time {
-
+public class Time implements Comparable<Time> {
     private int hour;
     private int minutes;
 
-    // constructor overloading
+    public Time() {
 
-    public Time(){
-        //TODO : call second constructor at 5 hours and 30 minutes
+    }
+
+    public Time(String time) {
+
     }
 
     public Time(int hour, int minutes) {
-        //TODO : add data field assignments with parameters
+        // Constructor with parameters
+        this.hour = hour;
+        this.minutes = minutes;
     }
 
-    //Accessor "gettors" Methods
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Time)) return false;
 
-    public int getHour() {
-        return hour;
+        Time otherTime = (Time) obj;
+        return hour == otherTime.hour &&
+                minutes == otherTime.minutes;
     }
 
-    public int getMinutes() {
-        return minutes;
+    @Override
+    public int compareTo(Time otherTime) {
+        // Implement comparison logic based on your requirements
+        if (this.hour != otherTime.hour) {
+            return Integer.compare(this.hour, otherTime.hour);
+        } else {
+            return Integer.compare(this.minutes, otherTime.minutes);
+        }
     }
 
     @Override
     public String toString() {
-        String time = String.format("%d:%02d", hour, minutes);
-        return (time.equals("0:0")) ? "" : time;
+
+        return String.format("%02d:%02d", hour, minutes);
+    }
+
+    public static Time parseTime(String timeString)
+    {
+        String[] parts = timeString.split(":");
+        if (parts.length != 2) {
+            System.out.println("Invalid time format: " + timeString);
+            return null;
+        }
+
+        try {
+            int hour = Integer.parseInt(parts[0]);
+            int minute = Integer.parseInt(parts[1]);
+
+            return new Time(hour, minute);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid time format: " + timeString);
+            return null;
+        }
     }
 }

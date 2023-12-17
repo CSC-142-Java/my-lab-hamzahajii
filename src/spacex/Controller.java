@@ -1,97 +1,120 @@
 package spacex;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
-
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static spacex.Date.parseDate;
+
+
 public class Controller {
     static String csvFileHeader;
 
-    private static Mission parse(String line) throws IllegalArgumentException {
-        String[]    str	    = line.split(",");
-        String[]	column	= new String[16];
+    private static spacex.Month parseMonth(String month) {
+        return spacex.Month.valueOf(month.toUpperCase());
+    }
 
-        //copy data into larger array to fix issues with splitting
+    private static Mission parse(String line) throws IllegalArgumentException {
+        String[] str = line.split(",");
+        String[] column = new String[16];
+
+        // copy data into a larger array to fix issues with splitting
         for (int i = 0; i < str.length; i++)
             column[i] = str[i];
 
-
         // null values at the end set to empty
-        if(str.length < column.length) {
+        if (str.length < column.length) {
             for (int i = str.length; i < column.length; i++) {
                 column[i] = "";
             }
         }
 
-        //TODO : Update the data with the values in the CSV file
-        String	    flightNumber    = null;
-        Date        launchDate		= null;
-        Time        launchTime		= null;
-        String      launchSite    	= null;
-        String      vehicleType  	= null;
-        double      mass			= 0.0;
-        Payload     payload			= null;
-        Customer    customer		= null;
-        String		missionOutcome  = null;
-        String		failureReason  	= null;
-        String		landingType  	= null;
-        String		landingOutcome  = null;
 
-        //TODO: return Mission object using the builder pattern
-        return null;
+
+        String flightNumber = column[0];
+        Date launchDate = parseDate(column[1]);  // Use parseDate method
+        spacex.Time launchTime = spacex.Time.parseTime(column[2]);  // Use parseTime method
+        String launchSite = column[3];
+        String vehicleType = column[4];
+        double mass = 0.0;
+        Payload payload = new Payload(column[6]);
+        Customer customer = new Customer(column[7], column[8], column[9]);
+        String missionOutcome = column[10];
+        String failureReason = column[11];
+        String landingType = column[12];
+        String landingOutcome = column[13];
+
+
+        return new Mission.Builder()
+                .setFlightNumber(flightNumber)
+                .setLaunchDate(launchDate)
+                .setLaunchTime(launchTime)
+                .setLaunchSite(launchSite)
+                .setVehicleType(vehicleType)
+                .setPayload(payload)
+                .setCustomer(customer)
+                .setMissionOutcome(missionOutcome)
+                .setFailureReason(failureReason)
+                .setLandingType(landingType)
+                .setLandingOutcome(landingOutcome)
+                .build();
     }
-
 
     public static void read(List<Mission> list, String inputLocation) throws FileNotFoundException {
-        File 	file	= new File(inputLocation);
-        Scanner input	= new Scanner(file);
+        File file = new File(inputLocation);
 
-        Mission missionData;
+        try (Scanner input = new Scanner(file)) {
+            csvFileHeader = input.nextLine(); // Read the CSV file header
 
-        //TODO: read in mission data and table header
-        input.close();
+            while (input.hasNextLine()) {
+                String line = input.nextLine();
+                try {
+                    Mission mission = parse(line);
+                    list.add(mission);
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Error parsing line: " + line);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-
-
     public static void writeCustomersInOrder(List<Mission> list, String customer, String outputLocation)
-                       throws FileNotFoundException{
-        String 		csvLocation	= outputLocation + File.separator + customer + ".csv";
-        String 		txtLocation	= outputLocation + File.separator + customer + ".txt";
-        File   		csvFile		= new File(csvLocation);
-        File   		txtFile		= new File(txtLocation);
-        PrintStream csvStream 	= new PrintStream(csvFile);
-        PrintStream txtStream 	= new PrintStream(txtFile);
+            throws FileNotFoundException {
+        String csvLocation = outputLocation + File.separator + customer + ".csv";
+        String txtLocation = outputLocation + File.separator + customer + ".txt";
+        File csvFile = new File(csvLocation);
+        File txtFile = new File(txtLocation);
+        PrintStream csvStream = new PrintStream(csvFile);
+        PrintStream txtStream = new PrintStream(txtFile);
 
-        //TODO: You may choose to use one, both or none of these suggested identifiers
-        Customer  missionCustomer;
-        Mission	  mission;
 
-        //TODO: get mission data with customer name.
+        Customer missionCustomer;
+        Mission mission;
+
+
+
         csvStream.close();
         txtStream.close();
-
     }
 
     public static void writePayloadsByOrder(List<Mission> list, String outputLocation) throws FileNotFoundException {
-        String 		csvLocation	= outputLocation + File.separator + "ordered_payload.csv";
-        String 		txtLocation	= outputLocation + File.separator + "ordered_payload.txt";
-        File   		csvFile		= new File(csvLocation);
-        File   		txtFile		= new File(txtLocation);
-        PrintStream csvStream 	= new PrintStream(csvFile);
-        PrintStream txtStream 	= new PrintStream(txtFile);
+        String csvLocation = outputLocation + File.separator + "ordered_payload.csv";
+        String txtLocation = outputLocation + File.separator + "ordered_payload.txt";
+        File csvFile = new File(csvLocation);
+        File txtFile = new File(txtLocation);
+        PrintStream csvStream = new PrintStream(csvFile);
+        PrintStream txtStream = new PrintStream(txtFile);
 
-        //TODO: sort payloads and order in a separate output file.
+
 
         csvStream.close();
         txtStream.close();
     }
 
-    public static void intro(){
+    public static void intro() {
         System.out.println();
         System.out.println();
         System.out.println("==================================================");
@@ -108,34 +131,30 @@ public class Controller {
         System.out.println();
     }
 
-
     public static void main(String[] args) throws FileNotFoundException {
+        String outputLocation = "." + File.separator + "results";
+        String inputLocation = "." + File.separator + "data"
+                + File.separator + "spacex_mission_data.csv";
 
-        String outputLocation  = "." + File.separator + "results";
+        // Print intro to the console
+        intro();
 
-        String inputLocation    = "." + File.separator + "data"
-                                      + File.separator + "spacex_mission_data.csv";
-
-
-//        System.out.println();
-//        //TODO: print intro to console
-//        intro();
-//
-//        //TODO: set list for data entry
-//        List<Mission> list     = new ArrayList<>();
-//
-//
-//        //TODO: set locations, read and write files
+        // Create a list to store mission data
+        List<Mission> missionList = new ArrayList<>();
 
 
-        //EXAMPLES: You can delete these, they are just examples
-        System.out.println();
-        Date date1 = new Date(4, Month.JUN, 10);
-        Date date2 = new Date(8, Month.OCT, 12);
-
-        System.out.println("Date 1 Object: " + date1);
-        System.out.println("Date 2 Object: " + date2);
+        read(missionList, inputLocation);
 
 
+        // Example: Print the flight numbers of all missions
+        for (Mission mission : missionList) {
+            System.out.println("Flight Number: " + mission.getFlightNumber());
+        }
+
+        // Write customers' missions to CSV and TXT files
+        writeCustomersInOrder(missionList, "DARPA", outputLocation);
+
+        // Write ordered payloads to CSV and TXT files
+        writePayloadsByOrder(missionList, outputLocation);
     }
 }
