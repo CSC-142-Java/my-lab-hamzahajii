@@ -6,10 +6,6 @@ public class Payload implements Comparable<Payload> {
     private double mass;
     private String orbit;
 
-    public Payload() {
-        // Default constructor
-    }
-
     public Payload(String payload) {
     }
 

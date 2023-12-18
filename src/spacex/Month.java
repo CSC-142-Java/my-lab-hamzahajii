@@ -1,22 +1,24 @@
 package spacex;
 
 public enum Month {
-    JANUARY("January"),
-    FEBRUARY("February"),
-    MARCH("March"),
-    APRIL("April"),
+    //TODO: update with enumerated pattern discussed in design documentation
+    JAN("Jan"),
+    FEB("Feb"),
+    MAR("Mar"),
+    APR("Apr"),
     MAY("May"),
-    JUNE("June"),
-    JULY("July"),
-    AUGUST("August"),
-    SEPTEMBER("September"),
-    OCTOBER("October"),
-    NOVEMBER("November"),
-    DECEMBER("December");
+    JUN("Jun"),
+    JUL("Jul"),
+    AUG("Aug"),
+    SEP("Sep"),
+    OCT("Oct"),
+    NOV("Nov"),
+    DEC("Dec");
 
-    private String value;
 
-    private Month(String value) {
+    private final String value;
+
+    Month(String value) {
         this.value = value;
     }
 

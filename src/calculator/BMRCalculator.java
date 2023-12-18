@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class BMRCalculator {
 
     public static double computeBMI(double weight, int height) {
-
         return (double) 703 * weight / (height * height) ;
     }
 
@@ -67,15 +66,9 @@ public class BMRCalculator {
 
 
     public static boolean isValidBodyType(String value) {
-        char bodyType = value.charAt(0);
-
         char type =  value.toUpperCase().charAt(0);
         return type == 'M' || type == 'F';
-
-
     }
-
-
 
 
     public static int getFeet(String value){
@@ -84,6 +77,7 @@ public class BMRCalculator {
         String feetValue = value.substring(0, feetEnd);
         return Integer.parseInt(feetValue);
     }
+
 
     public static int getHeight(Scanner scanner){
         //(1) show a prompt the tells the user how to enter the information the way you want
@@ -113,10 +107,7 @@ public class BMRCalculator {
     public static String getName(Scanner scanner){
         String firstName = scanner.next();
         String lastName = scanner.next();
-        String fullName = firstName + " " + lastName;
-
-        return fullName;
-
+        return firstName + " " + lastName;
     }
 
 
@@ -215,27 +206,20 @@ public class BMRCalculator {
 
     }
     public static double computeHighEndHealthyWeight(int height) {
-
         return (24.9 / 703) * (height * height);
     }
 
     public static double computeLowEndHealthyWeight(int height){
-
         return (18.5 / 703) * (height * height);
     }
 
-    //TODO: data folder toFile method
-
 
     public static char start(char key){
-
         //get input from the keyboard
         Scanner scanner = new Scanner(System.in);
 
         // prompt for quitting the program
         String prompt = "Enter 'q' to quit or any other key to continue.";
-        //key = scanner.next().charAt(0);
-
 
         // run the program until 'q' is entered.
         while (key != 'q'){
@@ -255,7 +239,6 @@ public class BMRCalculator {
             System.out.println();
             System.out.println(prompt);
             key = scanner.next().charAt(0);
-
         }
 
         return key;

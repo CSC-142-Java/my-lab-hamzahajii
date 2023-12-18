@@ -13,10 +13,25 @@ public class Customer {
         this.type     = type;
         this.country  = country;
     }
-    //TODO: Generate an equals method
+
+
+    public String getName() {
+        return name;
+    }
+
+
+    public String getType() {
+        return type;
+    }
+
+
+    public String getCountry() {
+        return country;
+    }
+
+
     @Override
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         if(obj instanceof Customer other){
             return name.equals(other.name) &&
                     type.equals(other.type) &&
@@ -25,21 +40,23 @@ public class Customer {
         return false;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-
-    public String toString() {
+    public String toCSVFormat() {
         // Update with a display pattern discussed in design documentation
         return String.format("Name: %s, Type: %s, Country: %s", name, type, country);
+    }
+
+    public String toString(){
+        String                  dashLine        = "********************************";
+        StringBuilder           builder         = new StringBuilder(dashLine + "\n");
+        DataMap[]               map             = new DataMap[3];
+
+        map[0] = new DataMap("Name:  "           ,name);
+        map[1] = new DataMap("Type:  "           ,type);
+        map[2] = new DataMap("Country:  "        ,country);
+
+        for(int i = 0 ; i < 3; i++) {
+            builder.append(String.format("%-18s %-4s \n", map[i].name, map[i].value));
+        }
+        return builder.toString();
     }
 }

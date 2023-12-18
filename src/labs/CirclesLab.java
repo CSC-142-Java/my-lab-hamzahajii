@@ -10,7 +10,6 @@ public class CirclesLab {
 
         Shapes circleShape = (Shapes) circles;
 
-
         //TODO: Set Location to (50, 50)
         circleShape.setLocation(50,50);
 
@@ -32,6 +31,7 @@ public class CirclesLab {
         // TODO : Pause for 250 milliseconds
         display.pause(250);
     }
+
 
     public static void testFillable(Viewer display, Fillable circles) throws Exception {
 

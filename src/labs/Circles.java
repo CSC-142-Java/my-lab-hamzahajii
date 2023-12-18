@@ -3,8 +3,7 @@
         import java.awt.Color;
         import java.awt.Graphics;
 
-//TODO: Use this class to complete the CirclesLab and submit to GitHub
-//      Your instructor will go over the specifics in your lab class.
+
 public class Circles extends Shapes implements Fillable, Drawable{
 
     private final Color     color;
@@ -15,8 +14,7 @@ public class Circles extends Shapes implements Fillable, Drawable{
         this.color   = Color.LIGHT_GRAY;
     }
 
-    //TODO: These methods have errors unless given the correct inheritance structure
-    //      Update class to make the methods below work
+
     public Circles(Graphics _graphics, int x, int y){
         super(x, y);
         this.graphic = _graphics;

@@ -6,25 +6,22 @@ public class Date  implements Comparable<Date> {
     private int year;
 
     public Date() {
-        this(1,Month.JANUARY, 2000);
+        this(1, Month.JAN , 2000);
     }
 
-    public Date(int day, Month month, int year)
-    {
+
+    public Date(int day, Month month, int year) {
         this.day = day;
         this.month = month;
         this.year = year;
     }
 
+
     public Date(String date) {
-        String[] parts = date.split("/");
-        if (parts.length == 3) {
+        String[] parts = date.split("-");
             this.day = Integer.parseInt(parts[0]);
             this.month = Month.valueOf(parts[1].toUpperCase());
             this.year = Integer.parseInt(parts[2]);
-        } else {
-            throw new IllegalArgumentException("Invalid date format: " + date);
-        }
     }
 
 
@@ -32,23 +29,19 @@ public class Date  implements Comparable<Date> {
     {
         return new Date(/* parsed values */);
     }
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Date date = (Date) obj;
-        return day == date.day && year == date.year && month == date.month;
+
+    public int getDay() {
+        return day;
     }
 
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(day, month, year);
-//    }
-
-    @Override
-    public String toString() {
-        return String.format("%d %s %d", day, month, year);
+    public int getYear() {
+        return year;
     }
+
+    public Month getMonth() {
+        return month;
+    }
+
 
     @Override
     public int compareTo(Date otherDate) {
@@ -68,4 +61,21 @@ public class Date  implements Comparable<Date> {
 
         return result;
     }
+
+    @Override
+    public boolean equals (Object obj) {
+        Date date = (Date) obj;
+        return day == date.day && year == date.year && month == date.month;
+    }
+
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(day, month, year);
+//    }
+
+    @Override
+    public String toString() {
+        return String.format("%d %s %d", day, month, year);
+    }
+
 }
