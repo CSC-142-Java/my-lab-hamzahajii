@@ -17,19 +17,20 @@ public class Mission implements Comparable<Mission> {
     public Mission() {}
 
     // Constructor with parameters
-    private Mission(String flightNumber, Date launchDate, Time launchTime, String launchSite, String vehicleType, Payload payload, Customer customer, String missionOutcome, String failureReason, String landingType, String landingOutcome) {
-        this.flightNumber = flightNumber;
-        this.launchDate = launchDate;
-        this.launchTime = launchTime;
-        this.launchSite = launchSite;
-        this.vehicleType = vehicleType;
-        this.payload = payload;
-        this.customer = customer;
-        this.missionOutcome = missionOutcome;
-        this.failureReason = failureReason;
-        this.landingType = landingType;
-        this.landingOutcome = landingOutcome;
+    public Mission(Builder builder) {
+        this.flightNumber = builder.flightNumber;
+        this.launchDate = builder.launchDate;
+        this.launchTime = builder.launchTime;
+        this.launchSite = builder.launchSite;
+        this.vehicleType = builder.vehicleType;
+        this.payload = builder.payload;
+        this.customer = builder.customer;
+        this.missionOutcome = builder.missionOutcome;
+        this.failureReason = builder.failureReason;
+        this.landingType = builder.landingType;
+        this.landingOutcome = builder.landingOutcome;
     }
+
 
     public String getFlightNumber() {
         return flightNumber;
@@ -119,19 +120,20 @@ public class Mission implements Comparable<Mission> {
         this.landingOutcome = landingOutcome;
     }
 
-    public String toCSVFormat() {
-        return String.join(",",
-                flightNumber,
-                launchDate.toString(),
-                launchTime.toString(),
-                launchSite,
-                vehicleType,
-                payload == null ? "" : payload.toString(),
-                customer == null ? "" : customer.toString(),
-                missionOutcome,
-                failureReason,
-                landingType,
-                landingOutcome);
+
+    public boolean equals(Object obj) {
+        Mission mission = (Mission) obj;
+        return flightNumber.equals(mission.flightNumber) &&
+                launchDate.equals(mission.launchDate) &&
+                launchTime.equals(mission.launchTime) &&
+                launchSite.equals(mission.launchSite) &&
+                vehicleType.equals(mission.vehicleType) &&
+                payload.equals(mission.payload) &&
+                customer.equals(mission.customer) &&
+                missionOutcome.equals(mission.missionOutcome) &&
+                failureReason.equals(mission.failureReason) &&
+                landingType.equals(mission.landingType) &&
+                landingOutcome.equals(mission.landingOutcome);
     }
 
     @Override
@@ -140,78 +142,140 @@ public class Mission implements Comparable<Mission> {
         return this.launchDate.compareTo(otherMission.launchDate);
     }
 
+    public String toCSVFormat() {
+        return String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
+                flightNumber, launchDate.toCSVFormat(), launchTime.toCSVFormat(), launchSite, vehicleType,
+                payload.toCSVFormat(), customer.toCSVFormat(), missionOutcome,
+                failureReason, landingType, landingOutcome);
+    }
+
     @Override
     public String toString() {
-        // Implement toString method
-        // Return a string representation of the mission, e.g., for debugging
-        return String.format("Mission{%s, %s, %s}", flightNumber, launchDate, launchTime);
+        String             dashLine     = "---------------------------------------------";
+        StringBuilder     builder     = new StringBuilder(dashLine + "\n");
+        int               size         = 11;
+        DataMap[]          map            = new DataMap[size];
+        map[0]         = new DataMap("Flight Number: "        , flightNumber);
+        map[1]         = new DataMap("Launch Date: "        , launchDate.toString());
+        map[2]         = new DataMap("Launch Time: "        , launchTime.toString());
+        map[3]         = new DataMap("Launch Site: "        , launchSite);
+        map[4]         = new DataMap("Vehicle Type: "        , vehicleType);
+        map[5]         = new DataMap("\nPayload: "            , payload.toString());
+        map[6]         = new DataMap("Customer: "            , customer.toString());
+        map[7]         = new DataMap("Mission Outcome: "    , missionOutcome);
+        map[8]         = new DataMap("Failure Reason: "    , failureReason);
+        map[9]         = new DataMap("Landing Type: "        , landingType);
+        map[10]     = new DataMap("Landing Outcome: "    , landingOutcome);
+
+        for (int i = 0; i < size; i++) {
+            builder.append(String.format("%-18s %-4s \n", map[i].name, map[i].value));
+        }
+
+        return builder.toString();
     }
 
     // Builder class
     public static class Builder {
-        private Mission mission;
+        String flightNumber;
+        Date launchDate;
+        Time launchTime;
+        String launchSite;
+        String vehicleType;
+        Payload payload;
+        Customer customer;
+        String missionOutcome;
+        String failureReason;
+        String landingType;
+        String landingOutcome;
 
         public Builder() {
-            this.mission = new Mission();
+            this.flightNumber = " ";
+            this.launchDate = new Date();
+            this.launchTime = new Time();
+            this.launchSite = " ";
+            this.vehicleType = " ";
+            this.payload = new Payload();
+            this.customer = new Customer();
+            this.missionOutcome = " ";
+            this.failureReason = " ";
+            this.landingType = " ";
+            this.landingOutcome = " ";
         }
 
         public Builder setFlightNumber(String flightNumber) {
-            mission.flightNumber = flightNumber;
+            this.flightNumber = flightNumber;
             return this;
         }
 
         public Builder setLaunchDate(Date launchDate) {
-            mission.launchDate = launchDate;
+            this.launchDate = launchDate;
+            return this;
+        }
+
+        public Builder setLaunchDate(String launchDate) {
+            this.launchDate = new Date(launchDate);
+            return this;
+        }
+
+        public Builder setLaunchTime(String launchTime) {
+            this.launchTime = new Time(launchTime);
             return this;
         }
 
         public Builder setLaunchTime(Time launchTime) {
-            mission.launchTime = launchTime;
+            this.launchTime = launchTime;
             return this;
         }
 
         public Builder setLaunchSite(String launchSite) {
-            mission.launchSite = launchSite;
+            this.launchSite = launchSite;
             return this;
         }
 
         public Builder setVehicleType(String vehicleType) {
-            mission.vehicleType = vehicleType;
+            this.vehicleType = vehicleType;
             return this;
         }
 
         public Builder setPayload(Payload payload) {
-            mission.payload = payload;
+            this.payload = payload;
+            return this;
+        }
+
+        public Builder setPayload(String value) {
+            this.payload = new Payload(value);
             return this;
         }
 
         public Builder setCustomer(Customer customer) {
-            mission.customer = customer;
+            this.customer = customer;
             return this;
         }
 
+
         public Builder setMissionOutcome(String missionOutcome) {
-            mission.missionOutcome = missionOutcome;
+            this.missionOutcome = missionOutcome;
             return this;
         }
 
         public Builder setFailureReason(String failureReason) {
-            mission.failureReason = failureReason;
+            this.failureReason = failureReason;
             return this;
         }
 
         public Builder setLandingType(String landingType) {
-            mission.landingType = landingType;
+            this.landingType = landingType;
             return this;
         }
 
         public Builder setLandingOutcome(String landingOutcome) {
-            mission.landingOutcome = landingOutcome;
+            this.landingOutcome = landingOutcome;
             return this;
         }
 
         public Mission build() {
-            return mission;
+            return new Mission(this);
         }
     }
+
 }

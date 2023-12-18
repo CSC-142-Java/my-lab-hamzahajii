@@ -1,0 +1,42 @@
+---------------------------------------------
+Flight Number:     F1-2 
+Launch Date:       21-Mar-07 
+Launch Time:       01:10 
+Launch Site:       Marshall Islands 
+Vehicle Type:      Falcon 1 
+
+Payload:          ********************************
+	Name:          DemoSat 
+	Type:               
+	Mass:          0.0  
+	Orbit: 
+Customer:          ********************************
+Name:              DARPA 
+Type:              Government 
+Country:           United States 
+ 
+Mission Outcome:   Failure 
+Failure Reason:    Engine Shutdown During Launch 
+Landing Type:           
+Landing Outcome:        
+---------------------------------------------
+Flight Number:     F1-1 
+Launch Date:       24-Mar-06 
+Launch Time:       22:30 
+Launch Site:       Marshall Islands 
+Vehicle Type:      Falcon 1 
+
+Payload:          ********************************
+	Name:          FalconSAT-2 
+	Type:          Research Satellite 
+	Mass:          19.5 
+	Orbit: 
+Customer:          ********************************
+Name:              DARPA 
+Type:              Government 
+Country:           United States 
+ 
+Mission Outcome:   Failure 
+Failure Reason:    Engine Fire During Launch 
+Landing Type:           
+Landing Outcome:        

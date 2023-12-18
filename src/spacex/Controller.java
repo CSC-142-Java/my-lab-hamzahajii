@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static spacex.Date.parseDate;
+
 
 
 public class Controller {
@@ -31,19 +31,18 @@ public class Controller {
         }
 
 
-
-        String flightNumber = column[0];
-        Date launchDate = parseDate(column[1]);  // Use parseDate method
-        spacex.Time launchTime = spacex.Time.parseTime(column[2]);  // Use parseTime method
-        String launchSite = column[3];
-        String vehicleType = column[4];
-        double mass = 0.0;
-        Payload payload = new Payload(column[6]);
-        Customer customer = new Customer(column[7], column[8], column[9]);
-        String missionOutcome = column[10];
-        String failureReason = column[11];
-        String landingType = column[12];
-        String landingOutcome = column[13];
+        String      flightNumber    = column[0];
+        Date        launchDate      = new Date(column[1]);
+        Time        launchTime      = new Time(column[2]);
+        String      launchSite      = column[3];
+        String      vehicleType     = column[4];
+        double      mass            = column[7].isEmpty() ? 0 : Double.parseDouble(column[7]);
+        Payload     payload         = new Payload(column[5], column[6], mass, column[8]);
+        Customer    customer        = new Customer(column[9], column[10], column[11]);
+        String      missionOutcome  = column[12];
+        String      failureReason   = column[13];
+        String      landingType     = column[14];
+        String      landingOutcome  = column[15];
 
 
         return new Mission.Builder()
@@ -90,10 +89,31 @@ public class Controller {
         PrintStream csvStream = new PrintStream(csvFile);
         PrintStream txtStream = new PrintStream(txtFile);
 
+        Payload p1;
+        Payload p2;
+        Mission temp;
 
-        Customer missionCustomer;
-        Mission mission;
+        int n = list.size();
+        for(int i = 0; i < n; i++)
+            for (int j = 0; j < n - i - 1; j++) {
+                p1 = list.get(j).getPayload();
+                p2 = list.get(j + 1).getPayload();
 
+                if (p1.compareTo(p2) > 0){
+                    temp = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, temp);
+                }
+            }
+
+        csvStream.println(csvFileHeader);
+
+        for (Mission mission : list) {
+            if (mission.getCustomer().getName().equals(customer)) {
+                csvStream.println(mission.toCSVFormat());
+                txtStream.print(mission);
+            }
+        }
 
 
         csvStream.close();
@@ -108,6 +128,29 @@ public class Controller {
         PrintStream csvStream = new PrintStream(csvFile);
         PrintStream txtStream = new PrintStream(txtFile);
 
+        Payload p1;
+        Payload p2;
+        Mission temp;
+
+        int n = list.size();
+        for(int i = 0; i < n; i++)
+            for (int j = 0; j < n - i - 1; j++) {
+                p1 = list.get(j).getPayload();
+                p2 = list.get(j + 1).getPayload();
+
+                if (p1.compareTo(p2) > 0){
+                    temp = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, temp);
+                }
+            }
+
+        csvStream.println(csvFileHeader);
+
+        for (Mission mission : list) {
+                csvStream.println(mission.toCSVFormat());
+                txtStream.print(mission);
+            }
 
 
         csvStream.close();
@@ -117,7 +160,7 @@ public class Controller {
     public static void intro() {
         System.out.println();
         System.out.println();
-        System.out.println("==================================================");
+        System.out.println("====================================================");
         System.out.println();
         System.out.println();
         System.out.println(" \t \t \t \t  W E L C O M E  ");
@@ -126,7 +169,7 @@ public class Controller {
         System.out.println();
         System.out.println(" \t    S    T    A    R    T    I    N    G");
         System.out.println();
-        System.out.println("==================================================");
+        System.out.println("====================================================");
         System.out.println();
         System.out.println();
     }

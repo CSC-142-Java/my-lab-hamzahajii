@@ -5,27 +5,26 @@ public class Time implements Comparable<Time> {
     private int minutes;
 
     public Time() {
-
+        this(5, 30);
     }
 
-    public Time(String time) {
-
+    public Time(String time){
+        String[] parts = time.split(":");
+        this.hour = Integer.parseInt(parts[0]);
+        this.minutes = Integer.parseInt(parts[1]);
     }
 
     public Time(int hour, int minutes) {
-        // Constructor with parameters
         this.hour = hour;
         this.minutes = minutes;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof Time)) return false;
+    public int getHour() {
+        return hour;
+    }
 
-        Time otherTime = (Time) obj;
-        return hour == otherTime.hour &&
-                minutes == otherTime.minutes;
+    public int getMinutes() {
+        return minutes;
     }
 
     @Override
@@ -39,27 +38,21 @@ public class Time implements Comparable<Time> {
     }
 
     @Override
-    public String toString() {
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Time)) return false;
 
-        return String.format("%02d:%02d", hour, minutes);
+        Time otherTime = (Time) obj;
+        return hour == otherTime.hour &&
+                minutes == otherTime.minutes;
     }
 
-    public static Time parseTime(String timeString)
-    {
-        String[] parts = timeString.split(":");
-        if (parts.length != 2) {
-            System.out.println("Invalid time format: " + timeString);
-            return null;
-        }
+    public String toCSVFormat() {
+        return this.toString();
+    }
 
-        try {
-            int hour = Integer.parseInt(parts[0]);
-            int minute = Integer.parseInt(parts[1]);
-
-            return new Time(hour, minute);
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid time format: " + timeString);
-            return null;
-        }
+    @Override
+    public String toString() {
+        return String.format("%02d:%02d", hour, minutes);
     }
 }

@@ -6,7 +6,16 @@ public class Payload implements Comparable<Payload> {
     private double mass;
     private String orbit;
 
+    public Payload() {
+        this(" ", " ", 0.0, " ");
+    }
+
     public Payload(String payload) {
+        String[] array = payload.split(" ");
+        this.name = array [0];
+        this.type = array[1];
+        this.mass = Double.parseDouble(array[2]);
+        this.orbit = array[3];
     }
 
     public Payload(String name, String type, double mass, String orbit) {
@@ -15,6 +24,28 @@ public class Payload implements Comparable<Payload> {
         this.type = type;
         this.mass = mass;
         this.orbit = orbit;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getType(){
+        return type;
+    }
+
+    public String getOrbit(){
+        return orbit;
+    }
+
+    public double getMass(){
+        return mass;
+    }
+
+    @Override
+    public int compareTo(Payload otherPayload)
+    {
+        return Double.compare(this.mass, otherPayload.mass);
     }
 
     @Override
@@ -29,15 +60,28 @@ public class Payload implements Comparable<Payload> {
                 orbit.equals(otherPayload.orbit);
     }
 
-    @Override
-    public int compareTo(Payload otherPayload)
-    {
-        return Double.compare(this.mass, otherPayload.mass);
+
+    public String toCSVFormat() {
+
+        return String.format("%s, %s, %.2f kg, %s", name, type, mass, orbit);
     }
 
     @Override
-    public String toString() {
+    public String toString(){
+        String                  dashLine        = "********************************";
+        StringBuilder           builder         = new StringBuilder(dashLine + "\n");
+        int                     size            = 4;
+        DataMap[]               map             = new DataMap[size];
 
-        return String.format("%s, %s, %.2f kg, %s", name, type, mass, orbit);
+        map[0] = new DataMap("Name:  "           ,name);
+        map[1] = new DataMap("Type:  "           ,type);
+        map[2] = new DataMap("Mass:  "           ,Double.toString(mass));
+        map[3] = new DataMap("Orbit:  "          ,orbit);
+
+        for (DataMap dataMap : map) {
+            builder.append(String.format("\t%-14s %-4s \n", dataMap.name, dataMap.value));
+        }
+
+        return builder.toString().stripTrailing();
     }
 }

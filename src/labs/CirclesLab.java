@@ -17,7 +17,7 @@ public class CirclesLab {
         display.pause(250);
 
         // TODO : Move location by (50, 0) and draw Yellow Circles
-        circleShape.move(50,100);
+        circleShape.move(50,0);
         circles.draw(Color.YELLOW);
 
         // TODO : Move location by (0, 100) and draw RED Circles

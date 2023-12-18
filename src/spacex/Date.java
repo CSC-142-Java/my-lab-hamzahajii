@@ -25,10 +25,10 @@ public class Date  implements Comparable<Date> {
     }
 
 
-    public static Date parseDate(String dateString)
-    {
-        return new Date(/* parsed values */);
-    }
+//    public static Date parseDate(String dateString)
+//    {
+//        return new Date(/* parsed values */);
+//    }
 
     public int getDay() {
         return day;
@@ -63,9 +63,11 @@ public class Date  implements Comparable<Date> {
     }
 
     @Override
-    public boolean equals (Object obj) {
-        Date date = (Date) obj;
-        return day == date.day && year == date.year && month == date.month;
+    public boolean equals(Object obj) {
+        if (obj instanceof Date other){
+            return day == other.day && year == other.year && month == other.month;
+        }
+        return false;
     }
 
 //    @Override
@@ -73,9 +75,13 @@ public class Date  implements Comparable<Date> {
 //        return Objects.hash(day, month, year);
 //    }
 
-    @Override
-    public String toString() {
-        return String.format("%d %s %d", day, month, year);
+    public String toCSVFormat(){
+        return this.toString();
     }
 
+    @Override
+    public String toString() {
+        String date = String.format("%d-%s-%02d", day, month, year);
+        return date.equals("0-Jan-0") ? "" : date;
+    }
 }

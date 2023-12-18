@@ -1,7 +1,6 @@
 package spacex;
 
 public enum Month {
-    //TODO: update with enumerated pattern discussed in design documentation
     JAN("Jan"),
     FEB("Feb"),
     MAR("Mar"),
