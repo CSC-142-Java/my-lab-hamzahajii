@@ -1,5 +1,8 @@
 package calculator;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 public class BMRCalculator {
@@ -14,6 +17,43 @@ public class BMRCalculator {
             return bmrValue + 5;
         else
             return bmrValue - 161;
+    }
+
+
+    //TODO: Update missing information in methods e..g burn rate etc.
+    public static void displayResults(Scanner scanner, PrintStream stream) {
+
+        //FIXME: convert to display format -> Instructor Suggestion
+        String name         = getName(scanner);
+        int    age          = getAge(scanner);
+        char   bodyType     = getBodyType(scanner);
+        double weight       = getWeight(scanner);
+        int    height       = getHeight(scanner);
+
+        double bmiValue     = computeBMI(weight, height);
+        double bmrValue     = computeBMR(age, bodyType, weight, height);
+        double lowValue     = computeLowEndHealthyWeight(height);
+        double highValue    = computeHighEndHealthyWeight(height);
+
+        //This is using the ternary operator
+        String bodyValue    = (bodyType == 'F') ? "Female" : "Male";
+
+        String category     = getWeightCategory(bmiValue);
+
+        stream.println();
+        stream.println();
+        stream.println("===================================================================");
+        stream.println("\t\t R  E  S  U  L   T   S");
+        stream.printf("%-15s \t\t %-10s   \n", "NAME", name);
+        stream.printf("%-15s \t\t %-10d   \n", "AGE", age);
+        stream.printf("%-15s \t\t %-10s   \n", "BODY TYPE", bodyValue);
+        stream.printf("%-15s \t\t %-10.1f lbs \n", "WEIGHT", weight);
+        stream.printf("%-15s \t\t %-10d inches \n", "HEIGHT", height);
+        stream.printf("%-15s \t\t %-10s calories  \n", "BMR VALUE", bmrValue);
+        stream.printf("%-15s \t\t %-10s   \n", "BURN RATE", getBurnRate(bmrValue));
+        stream.printf("%-15s \t\t %-10s   \n", "BMI VALUE", bmiValue);
+        stream.println("===================================================================");
+
     }
 
 
@@ -245,10 +285,26 @@ public class BMRCalculator {
     }
 
 
-    public static void main(String[] args) {
+    public static void toFile() throws FileNotFoundException {
+
+        String inputLocation = "." + File.separator + "data" + File.separator + "bmr.txt";
+        String outputLocation = "." + File.separator + "results" + File.separator + "bmr_results.txt";
+
+        File inputFile        = new File(inputLocation);
+        Scanner fileStream    = new Scanner(inputFile);
+        PrintStream outStream = new PrintStream(outputLocation);
+
+        while (fileStream.hasNextLine()){
+            displayResults(fileStream, outStream);
+        }
+
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
         //TODO: USe the design document on Canvas to complete this program
 
-        start('y');
+//        start('y');
+        toFile();
     }
 
 }

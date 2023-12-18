@@ -1,0 +1,65 @@
+
+
+===================================================================
+		 R  E  S  U  L   T   S
+NAME            		 Jack Knight   
+AGE             		 24           
+BODY TYPE       		 Male         
+WEIGHT          		 141.8      lbs 
+HEIGHT          		 69         inches 
+BMR VALUE       		 1624.9198099999999 calories  
+BURN RATE       		 MODERATE     
+BMI VALUE       		 20.937912203318632   
+===================================================================
+
+
+===================================================================
+		 R  E  S  U  L   T   S
+NAME            		 Martin White   
+AGE             		 21           
+BODY TYPE       		 Male         
+WEIGHT          		 193.4      lbs 
+HEIGHT          		 70         inches 
+BMR VALUE       		 1890.3400299999998 calories  
+BURN RATE       		 MODERATE     
+BMI VALUE       		 27.746979591836737   
+===================================================================
+
+
+===================================================================
+		 R  E  S  U  L   T   S
+NAME            		 Jane Winter   
+AGE             		 26           
+BODY TYPE       		 Female       
+WEIGHT          		 118.3      lbs 
+HEIGHT          		 62         inches 
+BMR VALUE       		 1230.976735 calories  
+BURN RATE       		 MODERATE     
+BMI VALUE       		 21.634989594172737   
+===================================================================
+
+
+===================================================================
+		 R  E  S  U  L   T   S
+NAME            		 Lily Smart   
+AGE             		 22           
+BODY TYPE       		 Female       
+WEIGHT          		 163.8      lbs 
+HEIGHT          		 65         inches 
+BMR VALUE       		 1505.4197100000001 calories  
+BURN RATE       		 MODERATE     
+BMI VALUE       		 27.254769230769234   
+===================================================================
+
+
+===================================================================
+		 R  E  S  U  L   T   S
+NAME            		 Frank Curtis   
+AGE             		 25           
+BODY TYPE       		 Male         
+WEIGHT          		 181.3      lbs 
+HEIGHT          		 73         inches 
+BMR VALUE       		 1862.965085 calories  
+BURN RATE       		 MODERATE     
+BMI VALUE       		 23.9170388440608   
+===================================================================
